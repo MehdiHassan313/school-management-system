@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Leaders Academy LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Welcome, {{ user.get_full_name|default:user.username }}!</h2>
+        <p class="lead">Role: {{ user.get_role_display }}</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    {% if user.role == 'admin' %}
+        <!-- Admin Dashboard -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Total Students</h5>
+                    <p class="card-text h2">{{ dashboard_data.total_students }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-chalkboard-teacher fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Total Teachers</h5>
+                    <p class="card-text h2">{{ dashboard_data.total_teachers }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-user-friends fa-3x text-info mb-3"></i>
+                    <h5 class="card-title">Total Parents</h5>
+                    <p class="card-text h2">{{ dashboard_data.total_parents }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-school fa-3x text-warning mb-3"></i>
+                    <h5 class="card-title">Total Classes</h5>
+                    <p class="card-text h2">{{ dashboard_data.total_classes }}</p>
+                </div>
+            </div>
+        </div>
+
+    {% elif user.role == 'teacher' %}
+        <!-- Teacher Dashboard -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Upcoming Assessments</h5>
+                </div>
+                <div class="card-body">
+                    {% if dashboard_data.upcoming_assessments %}
+                        <ul class="list-group list-group-flush">
+                            {% for assessment in dashboard_data.upcoming_assessments %}
+                                <li class="list-group-item">
+                                    <strong>{{ assessment.title }}</strong><br>
+                                    <small>{{ assessment.scheduled_date|date:"M d, Y H:i" }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">No upcoming assessments.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Content</h5>
+                </div>
+                <div class="card-body">
+                    {% if dashboard_data.recent_content %}
+                        <ul class="list-group list-group-flush">
+                            {% for content in dashboard_data.recent_content %}
+                                <li class="list-group-item">
+                                    <strong>{{ content.title }}</strong><br>
+                                    <small>{{ content.upload_date|date:"M d, Y" }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">No recent content.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% elif user.role == 'student' %}
+        <!-- Student Dashboard -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>My Timetable</h5>
+                </div>
+                <div class="card-body">
+                    {% if dashboard_data.timetable %}
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Period</th>
+                                        <th>Subject</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for entry in dashboard_data.timetable %}
+                                        <tr>
+                                            <td>{{ entry.day|title }}</td>
+                                            <td>{{ entry.period }}</td>
+                                            <td>{{ entry.subject.name }}</td>
+                                            <td>{{ entry.start_time }} - {{ entry.end_time }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No timetable available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Upcoming Assessments</h5>
+                </div>
+                <div class="card-body">
+                    {% if dashboard_data.upcoming_assessments %}
+                        <ul class="list-group list-group-flush">
+                            {% for assessment in dashboard_data.upcoming_assessments %}
+                                <li class="list-group-item">
+                                    <strong>{{ assessment.title }}</strong><br>
+                                    <small>{{ assessment.scheduled_date|date:"M d, Y H:i" }}</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">No upcoming assessments.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5>Attendance Percentage</h5>
+                    <div class="progress mt-3" style="height: 30px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ dashboard_data.attendance_percentage }}%" aria-valuenow="{{ dashboard_data.attendance_percentage }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ dashboard_data.attendance_percentage }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% elif user.role == 'parent' %}
+        <!-- Parent Dashboard -->
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>My Children</h5>
+                </div>
+                <div class="card-body">
+                    {% if dashboard_data.children %}
+                        <div class="row">
+                            {% for child in dashboard_data.children %}
+                                <div class="col-md-6 mb-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6>{{ child.user.get_full_name }}</h6>
+                                            <p class="mb-1">Grade: {{ child.grade }} {{ child.section }}</p>
+                                            <p class="mb-1">Attendance: {{ dashboard_data.children_attendance|length|add:forloop.counter0|get_item:child.id }}%</p>
+                                            {% if dashboard_data.unpaid_fees %}
+                                                <p class="text-danger mb-0">Unpaid Fees: ${{ dashboard_data.unpaid_fees|length }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No children registered.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

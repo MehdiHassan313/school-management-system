@@ -1,0 +1,46 @@
+/* Custom styles for Leaders Academy LMS */
+
+/* Body background */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Navbar customizations */
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* Card customizations */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+    border-bottom: none;
+}
+
+/* Button customizations */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Footer customizations */
+footer {
+    margin-top: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+}
