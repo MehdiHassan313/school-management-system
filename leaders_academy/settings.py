@@ -14,6 +14,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     'mehdihassan313.pythonanywhere.com',
+    'Mehdihassan313.pythonanywhere.com',
     'localhost',
     '127.0.0.1'
 ]
@@ -66,18 +67,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'leaders_academy.wsgi.application'
 
+# DATABASE CONFIGURATION - PYTHONANYWHERE
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mehdihassan313$school_management',
-        'USER': 'mehdihassan313',
-        'PASSWORD': 'your_mysql_password_here',
-        'HOST': 'mehdihassan313.mysql.pythonanywhere-services.com',
+        'NAME': 'Mehdihassan313$school_management',
+        'USER': 'Mehdihassan313',
+        'PASSWORD': 'Mehdi313@',
+        'HOST': 'Mehdihassan313.mysql.pythonanywhere-services.com',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         }
     }
 }
+
+# For local development (uncomment when working locally)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -133,6 +143,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     'https://mehdihassan313.pythonanywhere.com',
+    'https://Mehdihassan313.pythonanywhere.com',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
 ]
